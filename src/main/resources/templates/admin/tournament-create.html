@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/springsecurity6">
+<head th:replace="~{base :: head}"></head>
+<body class="bg-light">
+<div th:replace="~{base :: navbar}"></div>
+
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card shadow">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+          <h3 class="mb-0">
+            <i class="fas fa-plus-circle me-2"></i>
+            <span th:text="#{admin.tournament.create.title}">Nuevo Torneo</span>
+          </h3>
+          <span class="badge bg-warning text-dark" th:text="#{admin.mode}">
+            Modo Admin
+          </span>
+        </div>
+        <div class="card-body">
+          <form th:action="@{/admin/tournament/create}" method="POST">
+            <div class="mb-3">
+              <label class="form-label" th:text="#{admin.tournament.name}">Nombre del Torneo</label>
+              <input type="text" class="form-control" name="name" required>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" th:text="#{admin.tournament.description}">Descripción</label>
+              <textarea class="form-control" name="description" rows="3" required></textarea>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" th:text="#{admin.tournament.datetime}">Fecha y Hora</label>
+              <input type="datetime-local" class="form-control" name="eventDate" required>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" th:text="#{admin.tournament.location}">Lugar</label>
+              <input type="text" class="form-control" name="location" required>
+            </div>
+
+            <div class="d-flex justify-content-between">
+              <a href="/tournaments" class="btn btn-secondary">
+                <i class="fas fa-arrow-left me-2"></i>
+                <span th:text="#{admin.button.cancel}">Cancelar</span>
+              </a>
+              <button type="submit" class="btn btn-primary">
+                <i class="fas fa-save me-2"></i>
+                <span th:text="#{admin.tournament.create.button}">Crear Torneo</span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div th:replace="~{base :: scripts}"></div>
+</body>
+</html>

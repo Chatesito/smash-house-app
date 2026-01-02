@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/springsecurity6">
+<head th:replace="~{base :: head}"></head>
+<body class="bg-light">
+<div th:replace="~{base :: navbar}"></div>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <h3 class="mb-0">
+                        <i class="fas fa-user-circle me-2"></i>
+                        <span th:text="#{admin.player.edit.title}">Editar Jugador</span>
+                    </h3>
+                    <span class="badge bg-warning text-dark" th:text="#{admin.mode}">
+                        Modo Admin
+                    </span>
+                </div>
+                <div class="card-body">
+                    <form th:action="@{'/admin/player/' + ${player.id} + '/update'}" method="POST">
+                        <!-- Información no editable -->
+                        <div class="text-center mb-4">
+                            <h2 th:text="${player.nickname}" class="mb-2"></h2>
+                            <span class="badge bg-warning text-dark"
+                                  th:text="#{admin.player.rank(${player.position})}"></span>
+                            <span class="badge bg-info ms-2"
+                                  th:text="#{admin.player.points(${player.points})}"></span>
+                            <span class="badge bg-success ms-2"
+                                  th:text="#{admin.player.winrate(${#numbers.formatDecimal(player.winRate, 1, 1)})}"></span>
+                        </div>
+
+                        <!-- Campos editables -->
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label" th:text="#{admin.player.tournaments.played}">Torneos Jugados</label>
+                                <input type="number" min="0" class="form-control"
+                                       name="tournamentsPlayed"
+                                       th:value="${player.tournamentsPlayed}" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" th:text="#{admin.player.tournaments.won}">Torneos Ganados</label>
+                                <input type="number" min="0" class="form-control"
+                                       name="tournamentsWon"
+                                       th:value="${player.tournamentsWon}" required>
+                            </div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label" th:text="#{admin.player.matches.won}">Partidas Ganadas</label>
+                                <input type="number" min="0" class="form-control"
+                                       name="matchesWon"
+                                       th:value="${player.matchesWon}" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" th:text="#{admin.player.matches.lost}">Partidas Perdidas</label>
+                                <input type="number" min="0" class="form-control"
+                                       name="matchesLost"
+                                       th:value="${player.matchesLost}" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label" th:text="#{admin.player.achievements}">Logros</label>
+                            <textarea class="form-control" name="achievements"
+                                      rows="3"
+                                      th:text="${player.achievements}"></textarea>
+                        </div>
+
+                        <!-- Personajes -->
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label" th:text="#{admin.player.character.main}">Personaje Principal</label>
+                                <input type="text" class="form-control"
+                                       name="mainCharacter"
+                                       th:value="${player.mainCharacter}" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" th:text="#{admin.player.character.secondary}">Personaje Secundario</label>
+                                <input type="text" class="form-control"
+                                       name="secondaryCharacter"
+                                       th:value="${player.secondaryCharacter}">
+                            </div>
+                        </div>
+
+                        <!-- Botones -->
+                        <div class="d-flex justify-content-between">
+                            <a href="/ranking" class="btn btn-secondary">
+                                <i class="fas fa-arrow-left me-2"></i>
+                                <span th:text="#{admin.button.back}">Volver</span>
+                            </a>
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                                <i class="fas fa-trash me-2"></i>
+                                <span th:text="#{admin.button.delete}">Eliminar Jugador</span>
+                            </button>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save me-2"></i>
+                                <span th:text="#{admin.button.save}">Guardar Cambios</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" th:text="#{admin.modal.delete.title}">Confirmar Eliminación</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p th:text="#{admin.modal.delete.confirm(${player.nickname})}">¿Está seguro que desea eliminar a este jugador del ranking?</p>
+                <p class="text-danger"><strong th:text="#{admin.modal.delete.warning}">Esta acción no se puede deshacer.</strong></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:text="#{admin.button.cancel}">Cancelar</button>
+                <form th:action="@{'/admin/player/' + ${player.id} + '/delete'}" method="POST" style="display: inline;">
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fas fa-trash me-2"></i>
+                        <span th:text="#{admin.button.delete}">Eliminar</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{base :: scripts}"></div>
+<script th:src="@{/js/player-details-admin.js}"></script>
+</body>
+</html>

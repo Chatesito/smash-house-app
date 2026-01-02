@@ -1,0 +1,185 @@
+/* Estilos para el body y fondo */
+body {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.5)), url('../img/smash-template1.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    min-height: 100vh;
+    padding-top: 60px;
+}
+
+/* Estilos para el navbar */
+.navbar {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Logo en la navbar */
+.navbar-logo {
+    height: 30px;
+    width: auto;
+    transition: transform 0.3s ease;
+}
+
+.navbar-logo:hover {
+    transform: scale(1.1);
+}
+
+/* Estilos específicos para cada link de navegación */
+.nav-link {
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+/* Estilo general para el efecto de línea debajo */
+.nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    transition: width 0.3s ease;
+}
+
+/* Inicio - Verde */
+.nav-link[href="/home"] {
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+.nav-link[href="/home"]:hover {
+    color: #4CAF50 !important;
+}
+.nav-link[href="/home"]::after {
+    background-color: #4CAF50;
+}
+.nav-link[href="/home"]:hover::after {
+    width: 100%;
+}
+
+/* Ranking - Amarillo */
+.nav-link[href="/ranking"] {
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+.nav-link[href="/ranking"]:hover {
+    color: #FFD700 !important;
+}
+.nav-link[href="/ranking"]::after {
+    background-color: #FFD700;
+}
+.nav-link[href="/ranking"]:hover::after {
+    width: 100%;
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+    background-color: rgba(33, 37, 41, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: none;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+    background-color: rgba(33, 37, 41, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: none;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilos para los items del dropdown */
+.dropdown-item {
+    color: rgba(255, 255, 255, 0.8) !important;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+/* Mi Perfil - Azul */
+.dropdown-item:not(.text-danger):hover {
+    background-color: rgba(0, 139, 255, 0.23);
+    color: #2196F3 !important;
+}
+
+/* Cerrar Sesión - Rojo */
+.dropdown-item.text-danger {
+    color: rgba(255, 82, 82, 0.8) !important;
+}
+
+.dropdown-item.text-danger:hover {
+    background-color: rgba(255, 0, 0, 0.21);
+    color: #FF5252 !important;
+}
+
+/* Línea divisoria en el dropdown */
+.dropdown-divider {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Efecto hover con línea lateral */
+.dropdown-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 3px;
+    background-color: transparent;
+    transition: all 0.3s ease;
+}
+
+.dropdown-item:not(.text-danger):hover::before {
+    background-color: #2196F3;
+}
+
+.dropdown-item.text-danger:hover::before {
+    background-color: #FF5252;
+}
+
+/* Estilos para el contenedor principal de la página de inicio */
+.container.py-5 .card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    box-shadow:
+            0 0 20px rgba(0, 0, 0, 0.2),
+            0 0 5px rgb(0, 123, 255),
+            inset 0 0 15px rgba(255, 255, 255, 0.72);
+    border: 1px solid rgb(153, 0, 255);
+    padding: 2rem;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+/* Efecto de borde brillante */
+.container.py-5 .card::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: 15px;
+    background: linear-gradient(45deg,
+    #0062ff,
+    #00ff88,
+    #0062ff
+    );
+    -webkit-mask:
+            linear-gradient(#fff 0 0) content-box,
+            linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+}
+
+.container.py-5 .card:hover::before {
+    opacity: 0.8;
+    filter: brightness(1.2);
+}
+
+@media (max-width: 992px) {
+    .navbar-collapse {
+        background-color: rgba(33, 37, 41, 0.95);
+        padding: 1rem;
+        border-radius: 0.5rem;
+        margin-top: 0.5rem;
+    }
+}

@@ -1,0 +1,87 @@
+/* Estilos generales */
+.about-text {
+    padding: 20px !important;
+}
+
+.about-image img {
+    max-width: 100% !important;
+    height: auto !important;
+    border-radius: 10px !important;
+    transition: transform 0.3s ease !important;
+}
+
+.about-image img:hover {
+    transform: scale(1.02) !important;
+}
+
+/* Estilos para las redes sociales */
+.community-social-links {
+    display: flex !important;
+    justify-content: center !important;
+    gap: 2rem !important;
+    margin: 2rem auto !important;
+}
+
+.community-social-link {
+    display: inline-flex !important;
+    align-items: center !important;
+    padding: 1rem 2rem !important;
+    border-radius: 8px !important;
+    background-color: #f8f9fa !important;
+    text-decoration: none !important;
+    color: #333 !important;
+    border: 2px solid transparent !important;
+    transition: all 0.3s ease !important;
+}
+
+.community-social-link i {
+    font-size: 2.5rem !important;
+    margin-right: 1rem !important;
+}
+
+.community-social-link span {
+    font-size: 1.2rem !important;
+    font-weight: 500 !important;
+}
+
+/* Efectos hover específicos */
+.community-facebook:hover {
+    color: #3b5998 !important;
+    border-color: #3b5998 !important;
+    transform: translateY(-5px) !important;
+    box-shadow: 0 5px 15px rgba(59, 89, 152, 0.3) !important;
+}
+
+.community-instagram:hover {
+    color: #e4405f !important;
+    border-color: #e4405f !important;
+    transform: translateY(-5px) !important;
+    box-shadow: 0 5px 15px rgba(228, 64, 95, 0.3) !important;
+}
+
+.community-youtube:hover {
+    color: #ff0000 !important;
+    border-color: #ff0000 !important;
+    transform: translateY(-5px) !important;
+    box-shadow: 0 5px 15px rgba(255, 0, 0, 0.3) !important;
+}
+
+.community-tiktok:hover {
+    color: #000000 !important;
+    border-color: #000000 !important;
+    transform: translateY(-5px) !important;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .community-social-links {
+        flex-direction: column !important;
+        align-items: center !important;
+    }
+
+    .community-social-link {
+        width: 80% !important;
+        margin: 0.5rem 0 !important;
+    }
+}

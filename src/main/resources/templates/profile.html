@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/springsecurity6">
+<head th:replace="~{base :: head}"></head>
+<body class="bg-light">
+<div th:replace="~{base :: navbar}"></div>
+<div class="container py-5">
+  <div class="row">
+    <!-- Información del Perfil -->
+    <div class="col-lg-4">
+      <div class="card mb-4">
+        <div class="card-body text-center">
+          <img src="https://via.placeholder.com/150" alt="avatar"
+               class="rounded-circle img-fluid" style="width: 150px;">
+          <h5 class="my-3" th:text="${user.nickname}">Nombre del Usuario</h5>
+          <p class="text-muted mb-1" th:text="${user.name}">nickname</p>
+          <p class="text-muted mb-4" th:text="${user.email}">email@email.com</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cambio de Contraseña -->
+    <div class="col-lg-8">
+      <div class="card mb-4">
+        <div class="card-body">
+          <!-- Alertas de éxito y error -->
+          <div th:if="${success}" class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fas fa-check-circle me-2"></i>
+            <span th:text="${success}">Operación exitosa</span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+
+          <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="fas fa-exclamation-circle me-2"></i>
+            <span th:text="${error}">Error</span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+
+          <h5 class="card-title mb-4" th:text="#{profile.password.title}">Cambiar Contraseña</h5>
+          <form th:action="@{/profile/change-password}" method="post" class="needs-validation" novalidate>
+            <div class="mb-3">
+              <label for="currentPassword" class="form-label" th:text="#{profile.password.current}">Contraseña Actual</label>
+              <div class="input-group">
+                <input type="password" class="form-control" id="currentPassword"
+                       name="currentPassword" required>
+                <button class="btn btn-outline-secondary" type="button"
+                        onclick="togglePassword('currentPassword')">
+                  <i class="fas fa-eye"></i>
+                </button>
+              </div>
+              <div class="invalid-feedback" th:text="#{profile.password.current.required}">
+                Por favor, ingrese su contraseña actual
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="newPassword" class="form-label" th:text="#{profile.password.new}">Nueva Contraseña</label>
+              <div class="input-group">
+                <input type="password" class="form-control" id="newPassword"
+                       name="newPassword" required
+                       pattern=".{6,}"
+                       title="La contraseña debe tener al menos 6 caracteres">
+                <button class="btn btn-outline-secondary" type="button"
+                        onclick="togglePassword('newPassword')">
+                  <i class="fas fa-eye"></i>
+                </button>
+              </div>
+              <div class="invalid-feedback" th:text="#{profile.password.min.length}">
+                La contraseña debe tener al menos 6 caracteres
+              </div>
+              <small class="form-text text-muted" th:text="#{profile.password.min.length}">
+                La contraseña debe tener al menos 6 caracteres
+              </small>
+            </div>
+
+            <div class="mb-3">
+              <label for="confirmPassword" class="form-label" th:text="#{profile.password.confirm}">Confirmar Nueva Contraseña</label>
+              <div class="input-group">
+                <input type="password" class="form-control" id="confirmPassword"
+                       name="confirmPassword" required>
+                <button class="btn btn-outline-secondary" type="button"
+                        onclick="togglePassword('confirmPassword')">
+                  <i class="fas fa-eye"></i>
+                </button>
+              </div>
+              <div class="invalid-feedback" th:text="#{profile.password.confirm.required}">
+                Por favor, confirme su nueva contraseña
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-key me-2"></i>
+              <span th:text="#{profile.password.button.change}">Cambiar Contraseña</span>
+            </button>
+          </form>
+        </div>
+      </div>
+      <!-- Card de Eliminar Cuenta -->
+      <div class="card border-danger">
+        <div class="card-body">
+          <h5 class="card-title text-danger" th:text="#{profile.danger.zone}">Zona Peligrosa</h5>
+          <p class="card-text" th:text="#{profile.danger.warning}">Una vez que elimines tu cuenta, no hay vuelta atrás. Por favor, asegúrate de estar seguro.</p>
+          <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteAccountModal">
+            <i class="fas fa-user-times me-2"></i>
+            <span th:text="#{profile.button.delete.account}">Eliminar Cuenta</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de confirmación para eliminar la cuenta -->
+<div class="modal fade" id="deleteAccountModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" th:text="#{profile.modal.delete.title}">Confirmar Eliminación de Cuenta</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <form th:action="@{/profile/delete}" method="post">
+        <div class="modal-body">
+          <p th:text="#{profile.modal.delete.confirm}">¿Estás seguro que deseas eliminar tu cuenta? Esta acción no se puede deshacer.</p>
+          <p class="text-danger"><strong th:text="#{profile.modal.delete.warning}">Se eliminarán todos tus datos y no podrás recuperar tu cuenta.</strong></p>
+
+          <!-- Ingresar contraseña para eliminar la cuenta -->
+          <div class="mb-3">
+            <label for="deleteAccountPassword" class="form-label" th:text="#{profile.modal.delete.password}">Ingresa tu contraseña para confirmar</label>
+            <div class="input-group">
+              <input type="password"
+                     class="form-control"
+                     id="deleteAccountPassword"
+                     name="password"
+                     required>
+              <button class="btn btn-outline-secondary"
+                      type="button"
+                      onclick="togglePassword('deleteAccountPassword')">
+                <i class="fas fa-eye"></i>
+              </button>
+            </div>
+            <div class="invalid-feedback" th:text="#{profile.modal.delete.password.required}">
+              Por favor, ingresa tu contraseña
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:text="#{profile.button.cancel}">Cancelar</button>
+          <button type="submit" class="btn btn-danger">
+            <i class="fas fa-trash me-2"></i>
+            <span th:text="#{profile.button.delete.confirm}">Eliminar mi cuenta permanentemente</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<div th:replace="~{base :: scripts}"></div>
+<script th:src="@{/js/profile.js}"></script>
+</body>
+</html>
